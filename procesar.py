@@ -18,11 +18,20 @@ def procesar_ruta(ruta):
              resultados.append(leer_csv(f"{ruta}/{archivo}"))
     return(resultados)
 def filtrar_criticos(filas):
-    pass
+    critico=[]
+    for lineas in filas:
+        for linea in lineas[1:]:
+            if len(linea) < 5:
+                continue
+            elif int(linea[2]) > 80:
+                critico.append(linea)
+            elif linea[4]=="down":
+                 critico.append(linea)
+    return(critico)
 def generar_reporte(filtrado):
     pass
 
 dir = input("Ingresa la ruta a procesar: ")
 ruta = dir if dir != "" else "./data"
 datos = procesar_ruta(ruta) if os.path.exists(ruta) else print("La ruta no existe")
-print(datos)
+print(filtrar_criticos(datos))
