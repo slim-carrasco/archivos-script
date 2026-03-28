@@ -1,4 +1,5 @@
 
+import json
 import os
 
 def leer_csv(archivo):
@@ -28,10 +29,21 @@ def filtrar_criticos(filas):
             elif linea[4]=="down":
                  critico.append(linea)
     return(critico)
-def generar_reporte(filtrado):
-    pass
-
+def generar_reporte(critico):
+    with open("reportes/reporte.txt", "w") as f:
+    
+        for fila in critico:
+            f.write(f"{','.join(fila)}\n")
+            
+    columnas="timestamp", "servidor", "cpu", "memoria", "status"
+    reportes=[]
+    
+    for fila in critico:
+        reportes.append(dict(zip(columnas, fila)))
+    with open ("reportes/reporte.json", "w") as f:
+        f.write(json.dumps(reportes))
 dir = input("Ingresa la ruta a procesar: ")
 ruta = dir if dir != "" else "./data"
 datos = procesar_ruta(ruta) if os.path.exists(ruta) else print("La ruta no existe")
-print(filtrar_criticos(datos))
+datos_filtrados=filtrar_criticos(datos)
+print("exito")
