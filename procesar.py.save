@@ -1,0 +1,19 @@
+import os
+def leer_csv(archivo):
+    with open(f'{archivo}', 'r') as f:
+        for linea in f:
+                lista=linea.split(",")
+                print(lista)
+def procesar_ruta(ruta):
+    carpeta=os.listdir(ruta)
+    for archivo in carpeta:
+        if archivo.endswith(".csv"):
+             leer_csv(f"{ruta}/{archivo}")
+def filtrar_criticos(datos):
+    pass
+def generar_reporte(filtrado):
+    pass
+
+dir=input(f'Ingresa la ruta a procesar')
+ruta= dir if dir != "" else "./data"
+procesar_ruta(ruta) if os.path.exists(ruta) else print("La ruta no existe")
